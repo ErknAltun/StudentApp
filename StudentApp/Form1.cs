@@ -11,6 +11,20 @@ namespace StudentApp
 
         private readonly List<Student> students = new();
 
+        private void RefreshGrid()
+        {
+            dgvStudents.DataSource = null;
+            dgvStudents.DataSource = students;
+        }
+
+        private void Clear›nputs()
+        {
+            txtName.Clear();
+            txtAge.Clear();
+            txtGrade.Clear();
+            txtName.Focus();
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             Student student = new Student();
@@ -21,6 +35,8 @@ namespace StudentApp
                 student.Grade = double.Parse(txtGrade.Text);
             }
             students.Add(student);
+            RefreshGrid();
+            Clear›nputs();
         }
     }
 }
