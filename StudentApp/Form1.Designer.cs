@@ -118,6 +118,7 @@
             btnAdd.TabIndex = 12;
             btnAdd.Text = "Ekle";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnDelete
             // 
