@@ -91,6 +91,7 @@
             btnUpdate.TabIndex = 7;
             btnUpdate.Text = "Güncelle";
             btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // label1
             // 

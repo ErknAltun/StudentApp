@@ -84,7 +84,7 @@ namespace StudentApp
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Seçili Öðrenci Silinsin Mi?","Silme Onayý",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Seçili Öðrenci Silinsin Mi?", "Silme Onayý", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 students.Remove(selectedStudent);
@@ -93,6 +93,38 @@ namespace StudentApp
 
         }
 
-        
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Student? selectedStudent = dgvStudents.CurrentRow?.DataBoundItem as Student;
+            if (selectedStudent == null)
+            {
+                MessageBox.Show("Lütfen Bir Öðrenci Seçiniz!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Lütfen Bir Ýsim Giriniz!");
+                return;
+            }
+
+            if (!int.TryParse(txtAge.Text, out int age) || age < 1 || age > 100)
+            {
+                MessageBox.Show("Lütfen Geçerli Bir Yaþ Giriniz!");
+                return;
+            }
+
+            if (!double.TryParse(txtGrade.Text, out double grade) || grade < 0 || grade > 100)
+            {
+                MessageBox.Show("Lütfen Geçerli Bir Not Giriniz!");
+                return;
+            }
+
+            selectedStudent.Name = txtName.Text;
+            selectedStudent.Age = int.Parse(txtAge.Text);
+            selectedStudent.Grade= double.Parse(txtGrade.Text);
+            RefreshGrid();
+            ClearÝnputs();
+        }
     }
 }
