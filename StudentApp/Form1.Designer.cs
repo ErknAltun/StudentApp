@@ -34,12 +34,12 @@
             txtAge = new TextBox();
             txtGrade = new TextBox();
             btnUpdate = new Button();
-            dgvStudents = new DataGridView();
             label1 = new Label();
             btnAdd = new Button();
             btnDelete = new Button();
             btnSearch = new Button();
             txtSearch = new TextBox();
+            dgvStudents = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -92,14 +92,6 @@
             btnUpdate.Text = "Güncelle";
             btnUpdate.UseVisualStyleBackColor = false;
             // 
-            // dgvStudents
-            // 
-            dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStudents.Location = new Point(343, 12);
-            dgvStudents.Name = "dgvStudents";
-            dgvStudents.Size = new Size(760, 408);
-            dgvStudents.TabIndex = 10;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -129,6 +121,7 @@
             btnDelete.TabIndex = 13;
             btnDelete.Text = "Sil";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnSearch
             // 
@@ -147,18 +140,27 @@
             txtSearch.Size = new Size(226, 31);
             txtSearch.TabIndex = 15;
             // 
+            // dgvStudents
+            // 
+            dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStudents.Location = new Point(343, 3);
+            dgvStudents.Name = "dgvStudents";
+            dgvStudents.Size = new Size(760, 408);
+            dgvStudents.TabIndex = 16;
+            dgvStudents.CellContentClick += dgvStudents_CellContentClick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(128, 255, 255);
             ClientSize = new Size(1115, 561);
+            Controls.Add(dgvStudents);
             Controls.Add(txtSearch);
             Controls.Add(btnSearch);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(label1);
-            Controls.Add(dgvStudents);
             Controls.Add(btnUpdate);
             Controls.Add(txtGrade);
             Controls.Add(txtAge);
@@ -183,11 +185,11 @@
         private TextBox txtGrade;
         private Button button1;
         private Button btnUpdate;
-        private DataGridView dgvStudents;
         private Label label1;
         private Button btnAdd;
         private Button btnDelete;
         private Button btnSearch;
         private TextBox txtSearch;
+        private DataGridView dgvStudents;
     }
 }

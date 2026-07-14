@@ -25,6 +25,23 @@ namespace StudentApp
             txtName.Focus();
         }
 
+        private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            Student? selectedStudent = dgvStudents.CurrentRow?.DataBoundItem as Student;
+            if (selectedStudent == null)
+            {
+                MessageBox.Show("Lütfen Bir Öðrenci Seçiniz!");
+                return;
+            }
+
+            txtName.Text = selectedStudent.Name;
+            txtAge.Text = Convert.ToString(selectedStudent.Age);
+            txtGrade.Text = Convert.ToString(selectedStudent.Grade);
+        }
+
+
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             Student student = new Student();
@@ -36,13 +53,13 @@ namespace StudentApp
                     return;
                 }
 
-                if(!int.TryParse(txtAge.Text, out int age) || age<1 || age>100)
+                if (!int.TryParse(txtAge.Text, out int age) || age < 1 || age > 100)
                 {
                     MessageBox.Show("Lütfen Geçerli Bir Yaþ Giriniz!");
                     return;
                 }
 
-                if(!double.TryParse(txtGrade.Text, out double grade) || grade<0 || grade>100)
+                if (!double.TryParse(txtGrade.Text, out double grade) || grade < 0 || grade > 100)
                 {
                     MessageBox.Show("Lütfen Geçerli Bir Not Giriniz!");
                     return;
@@ -57,5 +74,25 @@ namespace StudentApp
             RefreshGrid();
             ClearÝnputs();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            Student? selectedStudent = dgvStudents.CurrentRow?.DataBoundItem as Student;
+            if (selectedStudent == null)
+            {
+                MessageBox.Show("Lütfen Bir Öðrenci Seçiniz!");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Seçili Öðrenci Silinsin Mi?","Silme Onayý",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                students.Remove(selectedStudent);
+                RefreshGrid();
+            }
+
+        }
+
+        
     }
 }
