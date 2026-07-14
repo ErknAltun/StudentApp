@@ -30,6 +30,25 @@ namespace StudentApp
             Student student = new Student();
             {
                 student.Id = students.Count + 1;
+                if (string.IsNullOrWhiteSpace(txtName.Text))
+                {
+                    MessageBox.Show("Lütfen Bir Ýsim Giriniz!");
+                    return;
+                }
+
+                if(!int.TryParse(txtAge.Text, out int age) || age<1 || age>100)
+                {
+                    MessageBox.Show("Lütfen Geçerli Bir Yaþ Giriniz!");
+                    return;
+                }
+
+                if(!double.TryParse(txtGrade.Text, out double grade) || grade<0 || grade>100)
+                {
+                    MessageBox.Show("Lütfen Geçerli Bir Not Giriniz!");
+                    return;
+                }
+
+
                 student.Name = txtName.Text;
                 student.Age = int.Parse(txtAge.Text);
                 student.Grade = double.Parse(txtGrade.Text);
