@@ -140,6 +140,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(226, 31);
             txtSearch.TabIndex = 15;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // dgvStudents
             // 

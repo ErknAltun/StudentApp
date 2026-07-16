@@ -40,6 +40,23 @@ namespace StudentApp
             txtGrade.Text = Convert.ToString(selectedStudent.Grade);
         }
 
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim();
+
+            List<Student> filteredStudents = students
+                .Where(student =>
+                    student.Name.Contains(
+                        searchText,
+                        StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            dgvStudents.DataSource = null;
+            if (filteredStudents.Count > 0) {dgvStudents.DataSource = filteredStudents;}
+
+            else if (filteredStudents.Count == 0) { dgvStudents.DataSource = students; }
+        }
+
 
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -122,9 +139,11 @@ namespace StudentApp
 
             selectedStudent.Name = txtName.Text;
             selectedStudent.Age = int.Parse(txtAge.Text);
-            selectedStudent.Grade= double.Parse(txtGrade.Text);
+            selectedStudent.Grade = double.Parse(txtGrade.Text);
             RefreshGrid();
             Clear›nputs();
         }
+
+        
     }
 }
