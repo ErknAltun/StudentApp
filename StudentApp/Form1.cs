@@ -8,6 +8,7 @@ namespace StudentApp
         public Form1()
         {
             InitializeComponent();
+            LoadStudents();
         }
 
         public readonly string connectionString =
@@ -26,7 +27,7 @@ namespace StudentApp
             using SQLiteConnection conn = new(connectionString);
             conn.Open();
 
-            const string query = """
+            string query = """
                 INSERT INTO Students (Name, Age, Grade)
                 VALUES (@name, @age, @grade);
                 """;
@@ -40,6 +41,33 @@ namespace StudentApp
             command.ExecuteNonQuery();
             conn.Close();
   
+        }
+
+        private void LoadStudents()
+        {
+            List<Student> students = new();
+            using SQLiteConnection conn = new(connectionString);
+            conn.Open();
+
+            string query = @"Select * from Students";
+
+            using SQLiteCommand command = new(query, conn);
+            using SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read()) 
+            { 
+                Student student = new Student();
+
+                student.Id=Convert.ToInt32(reader["ID"]);
+                student.Name=reader["Name"].ToString();
+                student.Age = Convert.ToInt32(reader["Age"]);
+                student.Grade = Convert.ToDouble(reader["Grade"]);
+
+                students.Add(student);
+
+                dgvStudents.DataSource = null;
+                dgvStudents.DataSource = students;
+            }
         }
 
         private void Clear›nputs()
@@ -113,7 +141,7 @@ namespace StudentApp
                 student.Grade = double.Parse(txtGrade.Text);
             }
             Add(student);
-            RefreshGrid();
+            LoadStudents();
             Clear›nputs();
         }
 
