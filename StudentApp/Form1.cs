@@ -10,7 +10,7 @@ namespace StudentApp
             InitializeComponent();
         }
 
-        private readonly string connectionString =
+        public readonly string connectionString =
             "Data Source=students.db;Version=3;";
         private readonly List<Student> students = new();
 
@@ -18,6 +18,28 @@ namespace StudentApp
         {
             dgvStudents.DataSource = null;
             dgvStudents.DataSource = students;
+        }
+
+        private void Add(Student student)
+        {
+   
+            using SQLiteConnection conn = new(connectionString);
+            conn.Open();
+
+            const string query = """
+                INSERT INTO Students (Name, Age, Grade)
+                VALUES (@name, @age, @grade);
+                """;
+
+            using SQLiteCommand command = new(query, conn);
+
+            command.Parameters.AddWithValue("@name", student.Name);
+            command.Parameters.AddWithValue("@age", student.Age);
+            command.Parameters.AddWithValue("@grade", student.Grade);
+
+            command.ExecuteNonQuery();
+            conn.Close();
+  
         }
 
         private void ClearÝnputs()
@@ -66,7 +88,7 @@ namespace StudentApp
         {
             Student student = new Student();
             {
-                student.Id = students.Count + 1;
+                
                 if (string.IsNullOrWhiteSpace(txtName.Text))
                 {
                     MessageBox.Show("Lütfen Bir Ýsim Giriniz!");
@@ -90,7 +112,7 @@ namespace StudentApp
                 student.Age = int.Parse(txtAge.Text);
                 student.Grade = double.Parse(txtGrade.Text);
             }
-            students.Add(student);
+            Add(student);
             RefreshGrid();
             ClearÝnputs();
         }
