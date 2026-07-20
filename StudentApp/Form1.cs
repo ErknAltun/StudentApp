@@ -1,4 +1,5 @@
 using StudentApp.Models;
+using System.Data.SQLite;
 namespace StudentApp
 
 {
@@ -9,6 +10,8 @@ namespace StudentApp
             InitializeComponent();
         }
 
+        private readonly string connectionString =
+            "Data Source=students.db;Version=3;";
         private readonly List<Student> students = new();
 
         private void RefreshGrid()
@@ -52,7 +55,7 @@ namespace StudentApp
                 .ToList();
 
             dgvStudents.DataSource = null;
-            if (filteredStudents.Count > 0) {dgvStudents.DataSource = filteredStudents;}
+            if (filteredStudents.Count > 0) { dgvStudents.DataSource = filteredStudents; }
 
             else if (filteredStudents.Count == 0) { dgvStudents.DataSource = students; }
         }
@@ -143,7 +146,5 @@ namespace StudentApp
             RefreshGrid();
             Clear›nputs();
         }
-
-        
     }
 }
