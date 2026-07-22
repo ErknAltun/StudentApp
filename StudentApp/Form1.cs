@@ -77,8 +77,28 @@ namespace StudentApp
 
             string query = @"Delete FROM Students WHERE id = @id";
             using SQLiteCommand command = new(query, conn);
+
             command.Parameters.AddWithValue("@id",id);
+
             command.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        private void UpdateStudent(Student student)
+        {
+            using SQLiteConnection conn = new(connectionString);
+            conn.Open();
+
+            string query = @"Update Students SET Name=@name, Age=@age, Grade=@grade WHERE id=@id";
+            using SQLiteCommand command = new(query, conn);
+
+            command.Parameters.AddWithValue("@name", student.Name);
+            command.Parameters.AddWithValue("@age",student.Age);
+            command.Parameters.AddWithValue("@grade", student.Grade);
+            command.Parameters.AddWithValue("@id",student.Id);
+
+            command.ExecuteNonQuery();
+            conn.Close();
         }
 
         private void Clear›nputs()
@@ -202,10 +222,12 @@ namespace StudentApp
                 return;
             }
 
-            selectedStudent.Name = txtName.Text;
-            selectedStudent.Age = int.Parse(txtAge.Text);
-            selectedStudent.Grade = double.Parse(txtGrade.Text);
-            RefreshGrid();
+            selectedStudent.Name = txtName.Text.Trim();
+            selectedStudent.Age = age;
+            selectedStudent.Grade = grade;
+
+            UpdateStudent(selectedStudent);
+            LoadStudents();
             Clear›nputs();
         }
     }
