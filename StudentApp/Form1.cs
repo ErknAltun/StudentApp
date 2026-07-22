@@ -70,6 +70,17 @@ namespace StudentApp
             }
         }
 
+        private void DeleteStudent(int id)
+        {
+            using SQLiteConnection conn = new(connectionString);
+            conn.Open();
+
+            string query = @"Delete FROM Students WHERE id = @id";
+            using SQLiteCommand command = new(query, conn);
+            command.Parameters.AddWithValue("@id",id);
+            command.ExecuteNonQuery();
+        }
+
         private void ClearÝnputs()
         {
             txtName.Clear();
@@ -157,8 +168,9 @@ namespace StudentApp
             DialogResult result = MessageBox.Show("Seçili Öðrenci Silinsin Mi?", "Silme Onayý", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                students.Remove(selectedStudent);
-                RefreshGrid();
+                DeleteStudent(selectedStudent.Id);
+                LoadStudents();
+                ClearÝnputs();
             }
 
         }
